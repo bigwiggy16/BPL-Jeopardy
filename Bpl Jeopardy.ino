@@ -1,3 +1,4 @@
+const int PENALTY 250;
 
 //pin variables
 int p1buzz = 8;
@@ -42,12 +43,14 @@ void setup() {
 }
 
 void loop() {
+  // Read buzzer states
+  buzz1_state = digitalRead(p1buzz);
+  buzz2_state = digitalRead(p2buzz);
+  buzz3_state = digitalRead(p3buzz);
+  
   //Buzzers not Active Mode.
   while (state = HIGH) { 
     digitalWrite(hostled, LOW);
-    buzz1_state = digitalRead(p1buzz);
-    buzz2_state = digitalRead(p2buzz);
-    buzz3_state = digitalRead(p3buzz);
 
     if (buzz1_state = LOW) {
       p1penalty = millis();
@@ -58,37 +61,21 @@ void loop() {
     if (buzz3_state = LOW) {
       p3penalty = millis();
     }
-    state = digitalRead(hostbuzz);
   }
 
   //Active Buzzers
   while (state = LOW) {
     digitalWrite(hostled, HIGH);
-    buzz1_state = digitalRead(p1buzz);
-    buzz2_state = digitalRead(p2buzz);
-    buzz3_state = digitalRead(p3buzz);
 
-    if (buzz1_state = LOW and p1penalty + 250 <= millis() ) {  //this is the time penalty check. 
-      while (state = LOW) {
-        digitalWrite(p1led, HIGH);
-        state = digitalRead(hostbuzz);
-      }
+    if (buzz1_state = LOW and p1penalty + PENALTY <= millis() ) {  //this is the time penalty check. 
+      digitalWrite(p1led, HIGH);
     }
-    if (buzz2_state = LOW and p2penalty + 250 <= millis() ) {
-      while (state = LOW) {
-        digitalWrite(p2led, HIGH);
-        state = digitalRead(hostbuzz);
-      }
+    if (buzz2_state = LOW and p2penalty + PENALTY <= millis() ) {
+      digitalWrite(p2led, HIGH);
     }
-    if (buzz3_state = LOW and p3penalty + 250 <= millis() ) {
-      while (state = LOW) {
-        digitalWrite(p3led, HIGH);
-        state = digitalRead(hostbuzz);
-      }
+    if (buzz3_state = LOW and p3penalty + PENALTY <= millis() ) {
+      digitalWrite(p3led, HIGH);
     }
   }
-
-
-  
-
+  state = digitalRead(hostbuzz);
 }
