@@ -1,4 +1,4 @@
-const int PENALTY 250;
+const int PENALTY = 250;
 
 //pin variables
 int p1buzz = 8;
@@ -61,6 +61,7 @@ void loop() {
     if (buzz3_state = LOW) {
       p3penalty = millis();
     }
+    state = digitalRead(hostbuzz);
   }
 
   //Active Buzzers
@@ -76,6 +77,7 @@ void loop() {
     if (buzz3_state = LOW and p3penalty + PENALTY <= millis() ) {
       digitalWrite(p3led, HIGH);
     }
+    state = digitalRead(hostbuzz);
   }
   state = digitalRead(hostbuzz);
 }
